@@ -21,8 +21,25 @@ except Exception as e:
         # Provide a minimal ASGI app fallback to avoid cold-start crashes on serverless
         try:
             from fastapi import FastAPI, Response
+            from fastapi.middleware.cors import CORSMiddleware
 
             _fallback = FastAPI()
+
+            # Match main app CORS settings so preflight succeeds for the frontend
+            _fallback.add_middleware(
+                CORSMiddleware,
+                allow_origins=[
+                    "http://localhost:3000",
+                    "http://127.0.0.1:3000",
+                    "http://10.10.247.154:3000",
+                    "https://viswanth207.github.io",
+                    "https://meal-planner-ai-upay.vercel.app",
+                ],
+                allow_origin_regex=r"https?://(localhost|127\.0\.0\.1)(:\d+)?",
+                allow_credentials=True,
+                allow_methods=["*"],
+                allow_headers=["*"],
+            )
 
             @_fallback.get("/health")
             def _health():
