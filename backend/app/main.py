@@ -1,5 +1,6 @@
 import os
 from fastapi import FastAPI
+from fastapi import Response
 from fastapi.middleware.cors import CORSMiddleware
 import logging
 from app.routes import auth_routes, ingredient_routes, mealplan_routes, whatsapp_routes
@@ -66,3 +67,8 @@ def _startup():
 @app.get("/health")
 def _health():
     return {"status": "ok"}
+
+# Browsers request /favicon.ico automatically; return 204 to avoid noisy errors
+@app.get("/favicon.ico")
+def _favicon():
+    return Response(status_code=204)
