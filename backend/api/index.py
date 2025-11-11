@@ -20,7 +20,7 @@ except Exception as e:
         traceback.print_exc()
         # Provide a minimal ASGI app fallback to avoid cold-start crashes on serverless
         try:
-            from fastapi import FastAPI, Response
+            from fastapi import FastAPI, Response, HTTPException
             from fastapi.middleware.cors import CORSMiddleware
 
             _fallback = FastAPI()
@@ -55,6 +55,23 @@ except Exception as e:
             def _root():
                 # Simple text response to confirm deployment routing
                 return Response(content="hi", media_type="text/plain")
+
+            # Clarify auth endpoints when fallback is serving and support preflight
+            @_fallback.get("/auth/signup")
+            def _fallback_signup_get():
+                raise HTTPException(status_code=405, detail="Method Not Allowed. Use POST.")
+
+            @_fallback.options("/auth/signup")
+            def _fallback_signup_options():
+                return Response(status_code=204)
+
+            @_fallback.get("/auth/login")
+            def _fallback_login_get():
+                raise HTTPException(status_code=405, detail="Method Not Allowed. Use POST.")
+
+            @_fallback.options("/auth/login")
+            def _fallback_login_options():
+                return Response(status_code=204)
 
             app = _fallback
         except Exception:

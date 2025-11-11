@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, HTTPException, Depends, Response
 import re
 from pydantic import BaseModel, EmailStr
 from app.database import db
@@ -50,6 +50,15 @@ async def signup(user: SignupUser):
     token = create_access_token({"sub": email_norm})
     return {"access_token": token, "token_type": "bearer"}
 
+# Clarify method expectations and support CORS preflight
+@router.get("/signup", include_in_schema=False)
+def signup_get():
+    raise HTTPException(status_code=405, detail="Method Not Allowed. Use POST.")
+
+@router.options("/signup", include_in_schema=False)
+def signup_options():
+    return Response(status_code=204)
+
 @router.post("/login")
 async def login(user: LoginUser):
     email_norm = user.email.strip().lower()
@@ -94,6 +103,15 @@ async def login(user: LoginUser):
         }, {"$set": {"phone": phone_val}})
     token = create_access_token({"sub": email_norm})
     return {"access_token": token, "token_type": "bearer"}
+
+# Clarify method expectations and support CORS preflight
+@router.get("/login", include_in_schema=False)
+def login_get():
+    raise HTTPException(status_code=405, detail="Method Not Allowed. Use POST.")
+
+@router.options("/login", include_in_schema=False)
+def login_options():
+    return Response(status_code=204)
 
 @router.get("/me")
 async def me(current_user: str = Depends(decode_access_token)):
