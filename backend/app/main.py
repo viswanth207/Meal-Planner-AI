@@ -44,9 +44,9 @@ app.include_router(agentic_routes.router)     # new orchestration endpoints
 @app.on_event("startup")
 def _startup():
     try:
-        # Avoid DB init on Vercel when no Mongo env provided
-        if os.getenv("VERCEL") == "1" and not (os.getenv("MONGODB_URI") or os.getenv("MONGO_URI")):
-            logger.warning("Skipping MongoDB index init: Vercel env without MONGO_URI")
+        # Always skip DB index initialization on Vercel to avoid cold-start failures
+        if os.getenv("VERCEL") == "1":
+            logger.info("Skipping MongoDB index initialization on Vercel serverless environment")
         else:
             init_indexes()
             logger.info("MongoDB indexes ensured")
