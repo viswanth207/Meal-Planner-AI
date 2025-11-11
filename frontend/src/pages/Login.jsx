@@ -31,7 +31,7 @@ function Login() {
   };
 
   return (
-    <div className="auth-bg flex items-center justify-center" style={{ backgroundImage: "linear-gradient(rgba(249,250,251,0.88), rgba(238,242,255,0.88)), url('/meal-planner.svg')", backgroundSize: 'cover, cover', backgroundPosition: 'center, center -60px', backgroundRepeat: 'no-repeat' }}>
+    <div className="auth-bg flex items-center justify-center" style={{ backgroundImage: `linear-gradient(rgba(249,250,251,0.88), rgba(238,242,255,0.88)), url('${process.env.PUBLIC_URL}/meal-planner.svg')`, backgroundSize: 'cover, cover', backgroundPosition: 'center, center -60px', backgroundRepeat: 'no-repeat' }}>
       <div className="w-full max-w-6xl grid md:grid-cols-2 rounded-2xl shadow-2xl overflow-hidden">
         {/* Left visual panel */}
         <div className="hidden md:block relative bg-gradient-to-br from-emerald-600 via-green-600 to-emerald-700 p-8">
@@ -44,7 +44,7 @@ function Login() {
             <h2 className="text-3xl font-extrabold mb-2">Welcome back!</h2>
             <p className="text-sm text-emerald-100">You can sign in to access your existing account.</p>
             <div className="mt-6">
-              <img src="/meal-planner.svg" alt="Meal planner decorative" className="w-full rounded-xl shadow-lg ring-1 ring-white/20" />
+              <img src={process.env.PUBLIC_URL + "/meal-planner.svg"} alt="Meal planner decorative" className="w-full rounded-xl shadow-lg ring-1 ring-white/20" />
             </div>
           </div>
         </div>

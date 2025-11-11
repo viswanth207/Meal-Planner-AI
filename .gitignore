@@ -19,3 +19,22 @@ backend/venv/
 .DS_Store
 Thumbs.db
 *.log
+
+# Python caches and artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+backend/__pycache__/
+backend/.pytest_cache/
+backend/app/__pycache__/
+backend/tests/__pycache__/
+
+# Frontend build output
+frontend/build/
+
+# Sensitive tokens and logs
+backend/token.txt
+backend/backend_err.txt
+backend/backend_out.txt

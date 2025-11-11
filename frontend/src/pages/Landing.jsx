@@ -29,7 +29,7 @@ function Landing() {
       <section id="home" className="relative h-screen snap-start pt-28 md:pt-32">
         <div
           className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: "url('/meal-planner.svg')", filter: "blur(1px)" }}
+          style={{ backgroundImage: `url('${process.env.PUBLIC_URL}/meal-planner.svg')`, filter: "blur(1px)" }}
           aria-hidden="true"
         />
         <div className="absolute inset-0 bg-black/30" aria-hidden="true" />
@@ -59,7 +59,7 @@ function Landing() {
           <div className="reveal">
             <div className="relative">
               <div className="absolute -inset-4 bg-gradient-to-r from-emerald-500/20 to-green-600/20 blur-2xl rounded-3xl" aria-hidden="true" />
-              <img src="/meal-planner.svg" alt="AI cooking assistant" className="relative w-full rounded-2xl ring-1 ring-white/30 shadow-2xl" />
+              <img src={process.env.PUBLIC_URL + "/meal-planner.svg"} alt="AI cooking assistant" className="relative w-full rounded-2xl ring-1 ring-white/30 shadow-2xl" />
             </div>
           </div>
         </div>
